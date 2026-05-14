@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkCard from '../../components/cards/WorkCard.astro';
+import { sortWorks } from '../../lib/content';
+
+const works = sortWorks(await getCollection('works'));
+const categories = ['全部', '游戏设计', 'AI 工具', '编剧叙事', '游戏分析', '简历经历'];
+---
+
+<BaseLayout title="作品间 Portfolio" description="这里收纳我的游戏设计、编剧叙事、AI 工具流、游戏分析和职业档案。">
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <span class="eyebrow">Portfolio</span>
+      <h1>作品间 Portfolio</h1>
+      <p class="lead">这里收纳我的游戏设计、编剧叙事、AI 工具流、游戏分析和职业档案。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="filter-bar" aria-label="作品分类筛选">
+        {categories.map((category) => (
+          <button
+            class:list={['filter-button', category === '全部' && 'is-active']}
+            type="button"
+            data-filter-button
+            data-category={category}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <div class="work-grid portfolio-grid">
+        {works.map((work) => (
+          <div data-filter-card data-category={work.data.type}>
+            <WorkCard
+              href={`/portfolio/work/${work.slug}/`}
+              title={work.data.title}
+              summary={work.data.summary}
+              type={work.data.type}
+              role={work.data.role}
+              tags={work.data.tags}
+              cover={work.data.cover}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter-button]'));
+  const filterCards = Array.from(document.querySelectorAll<HTMLElement>('[data-filter-card]'));
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const category = button.dataset.category || '全部';
+      filterButtons.forEach((item) => item.classList.toggle('is-active', item === button));
+      filterCards.forEach((card) => {
+        card.hidden = category !== '全部' && card.dataset.category !== category;
+      });
+    });
+  });
+</script>

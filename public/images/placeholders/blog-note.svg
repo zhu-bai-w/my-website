@@ -1,0 +1,10 @@
+<svg width="960" height="600" viewBox="0 0 960 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="600" fill="#FFF9ED"/>
+  <rect x="176" y="92" width="420" height="416" rx="8" fill="#EFE3CB" stroke="#E1D3BA" stroke-width="5"/>
+  <path d="M240 172H532M240 230H508M240 288H548M240 346H456" stroke="#3B2463" stroke-width="9" stroke-linecap="round"/>
+  <rect x="616" y="142" width="168" height="118" rx="8" fill="#FFD84D" stroke="#FF9F1C" stroke-width="5"/>
+  <path d="M650 198H750" stroke="#3B2463" stroke-width="9" stroke-linecap="round"/>
+  <path d="M630 342L674 390L760 292" stroke="#6B7D46" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M790 392C756 368 712 372 686 406C730 426 766 422 790 392Z" fill="#6B7D46"/>
+  <text x="72" y="548" fill="#3B2463" font-family="Arial, sans-serif" font-size="42" font-weight="700">MARKDOWN NOTES</text>
+</svg>

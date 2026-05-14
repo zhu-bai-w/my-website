@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Badge from '../components/ui/Badge.astro';
+import BambooLogo from '../components/ui/BambooLogo.astro';
+
+const skills = ['Game Design', 'Narrative Design', 'AI Workflow', 'Tools & Automation', 'Project Management', 'Writing'];
+const nowItems = [
+  '整理个人作品集与简历材料',
+  '推进独立游戏 Demo 与项目复盘',
+  '搭建 AI 信息助手与自动化工作流',
+  '记录游戏设计、AI 工具和创作方法论'
+];
+---
+
+<BaseLayout title="关于 About" description="关于竹子白茶，以及最近正在做的事情。">
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <span class="eyebrow">About</span>
+      <h1>关于 About</h1>
+      <p class="lead">我是竹子白茶，关注游戏设计、AI 工具流与叙事创作，也喜欢把复杂想法整理成系统、流程和可执行产出。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container about-preview">
+      <article class="card profile-panel">
+        <h2>个人介绍</h2>
+        <p>
+          我把这个网站当作一间长期整理作品、笔记和工具实验的小屋。这里会逐步收纳游戏设计文档、编剧叙事项目、AI 自动化流程、项目复盘和职业档案。
+        </p>
+        <p>
+          我在意内容表达，也在意系统结构：一个创意如何拆成任务，一个项目如何复盘成经验，一个工具链如何变成稳定的创作协作流程。
+        </p>
+        <div class="badge-list">
+          {skills.map((skill) => <Badge label={skill} tone="leaf" />)}
+        </div>
+      </article>
+      <div class="abstract-avatar" aria-label="头像预留区域">
+        <BambooLogo class="avatar-mark" title="竹子白茶抽象头像" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="container resume-grid">
+      <article class="card info-panel">
+        <h2>最近正在做</h2>
+        <ul>
+          {nowItems.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+      <article class="card info-panel">
+        <h2>联系方式</h2>
+        <p>Email: zhu_bai@foxmail.com（海内）</p>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

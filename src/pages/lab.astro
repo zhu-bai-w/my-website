@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolCard from '../components/cards/ToolCard.astro';
+import WorkCard from '../components/cards/WorkCard.astro';
+import { getCollection } from 'astro:content';
+import { sortWorks } from '../lib/content';
+
+const works = sortWorks(await getCollection('works'));
+const labWorks = works.filter((work) => ['personal-info-assistant', 'ai-workflow'].includes(work.slug));
+const tools = [
+  ['ChatGPT', '用于创意发散、结构整理、文本推敲和多轮协作。'],
+  ['Codex', '用于代码实现、项目整理、脚手架搭建和前端工程协作。'],
+  ['OpenAI API', '用于摘要、分类、结构化信息提取和工作流节点能力。'],
+  ['n8n', '用于连接 RSS、接口、飞书和自动化任务。'],
+  ['飞书', '用于项目文档、日报推送、协作记录和知识沉淀。'],
+  ['RSS', '用于建立长期稳定的信息输入源。'],
+  ['Docker / 服务器', '用于部署自动化服务和个人工具系统。'],
+  ['Git / MCP / Prompt Engineering', '用于版本管理、工具连接和任务表达。']
+];
+---
+
+<BaseLayout title="工具房 Lab" description="这里记录我如何用 AI、自动化和工具链搭建自己的创作与信息处理系统。">
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <span class="eyebrow">Lab</span>
+      <h1>工具房 Lab</h1>
+      <p class="lead">这里记录我如何用 AI、自动化和工具链搭建自己的创作与信息处理系统。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Tool Map</span>
+          <h2>我的 AI 工具地图</h2>
+        </div>
+      </div>
+      <div class="tool-grid">
+        {tools.map(([title, description]) => <ToolCard title={title} description={description} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="container">
+      <article class="card workflow-card">
+        <span class="section-kicker">Workflow</span>
+        <h2>代表工作流</h2>
+        <p class="lead">RSS 信息源经过 n8n 编排，由 OpenAI 完成摘要与分类，再推送到飞书形成每日信息记录。</p>
+        <div class="workflow-line" aria-label="RSS 到飞书日报的自动化流程">
+          <span class="workflow-node">RSS 信息源</span>
+          <span class="workflow-arrow">-></span>
+          <span class="workflow-node">n8n</span>
+          <span class="workflow-arrow">-></span>
+          <span class="workflow-node">OpenAI 摘要分类</span>
+          <span class="workflow-arrow">-></span>
+          <span class="workflow-node">飞书日报推送</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Cases</span>
+          <h2>项目案例入口</h2>
+        </div>
+      </div>
+      <div class="work-grid home-grid">
+        {labWorks.map((work) => (
+          <WorkCard
+            href={`/portfolio/work/${work.slug}/`}
+            title={work.data.title}
+            summary={work.data.summary}
+            type={work.data.type}
+            role={work.data.role}
+            tags={work.data.tags}
+            cover={work.data.cover}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

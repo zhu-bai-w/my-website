@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/cards/BlogCard.astro';
+import { sortPosts } from '../../lib/content';
+
+const posts = sortPosts(await getCollection('blog'));
+const categories = ['全部', '游戏设计', 'AI 工作流', '项目日志', '叙事写作', '方法论'];
+---
+
+<BaseLayout title="书房 Blog" description="这里记录我的游戏设计笔记、AI 工具流、项目日志、叙事写作和方法论。">
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <span class="eyebrow">Blog</span>
+      <h1>书房 Blog</h1>
+      <p class="lead">这里记录我的游戏设计笔记、AI 工具流、项目日志、叙事写作和方法论。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="filter-bar" aria-label="博客分类筛选">
+        {categories.map((category) => (
+          <button
+            class:list={['filter-button', category === '全部' && 'is-active']}
+            type="button"
+            data-filter-button
+            data-category={category}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <div class="blog-grid">
+        {posts.map((post) => (
+          <div data-filter-card data-category={post.data.category}>
+            <BlogCard
+              href={`/blog/note/${post.slug}/`}
+              title={post.data.title}
+              summary={post.data.summary}
+              date={post.data.date}
+              category={post.data.category}
+              tags={post.data.tags}
+              readingTime={post.data.readingTime}
+              cover={post.data.cover}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter-button]'));
+  const filterCards = Array.from(document.querySelectorAll<HTMLElement>('[data-filter-card]'));
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const category = button.dataset.category || '全部';
+      filterButtons.forEach((item) => item.classList.toggle('is-active', item === button));
+      filterCards.forEach((card) => {
+        card.hidden = category !== '全部' && card.dataset.category !== category;
+      });
+    });
+  });
+</script>

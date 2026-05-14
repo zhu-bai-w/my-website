@@ -1,0 +1,28 @@
+---
+import Badge from '../ui/Badge.astro';
+import Button from '../ui/Button.astro';
+import BambooLogo from '../ui/BambooLogo.astro';
+
+const skills = ['Game Design', 'Narrative Design', 'AI Workflow', 'Tools & Automation', 'Project Management', 'Writing'];
+---
+
+<section class="section" aria-labelledby="about-preview-title">
+  <div class="container about-preview">
+    <div class="card profile-panel">
+      <span class="section-kicker">About Preview</span>
+      <h2 id="about-preview-title">关于竹子白茶</h2>
+      <p class="lead">
+        我是竹子白茶，一名关注游戏设计、AI 工具流与叙事创作的创作者。我喜欢把复杂想法拆成系统、流程和可执行的项目，也在持续探索 AI 如何帮助创作、协作与个人知识管理。
+      </p>
+      <div class="badge-list">
+        {skills.map((skill) => <Badge label={skill} tone="leaf" />)}
+      </div>
+      <div class="button-row">
+        <Button href="/about/" label="了解更多" />
+      </div>
+    </div>
+    <div class="abstract-avatar" aria-label="抽象竹叶头像区域">
+      <BambooLogo class="avatar-mark" title="抽象竹叶头像" />
+    </div>
+  </div>
+</section>

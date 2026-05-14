@@ -1,0 +1,12 @@
+node_modules/
+node-compile-cache/
+dist/
+.astro/
+
+*.log
+screenshots/
+.edge-qa-profile/
+.edge-qa-profile*/
+
+.DS_Store
+Thumbs.db

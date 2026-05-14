@@ -1,0 +1,44 @@
+---
+import RoomCard from '../cards/RoomCard.astro';
+
+const rooms = [
+  {
+    href: '/portfolio/',
+    icon: 'P',
+    title: '作品间 Portfolio',
+    description: '游戏、短剧、AI 项目与系统分析作品。'
+  },
+  {
+    href: '/blog/',
+    icon: 'B',
+    title: '书房 Blog',
+    description: '游戏设计、AI 工具流、项目复盘与创作笔记。'
+  },
+  {
+    href: '/lab/',
+    icon: 'L',
+    title: '工具房 Lab',
+    description: 'AI 工具、自动化系统、Prompt 和效率工作流。'
+  },
+  {
+    href: '/resume/',
+    icon: 'R',
+    title: '档案柜 Resume',
+    description: '教育背景、项目经历、技能栈与职业档案。'
+  }
+];
+---
+
+<section class="section" aria-labelledby="featured-rooms">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <span class="section-kicker">Featured Rooms</span>
+        <h2 id="featured-rooms">精选房间</h2>
+      </div>
+    </div>
+    <div class="room-grid">
+      {rooms.map((room) => <RoomCard {...room} />)}
+    </div>
+  </div>
+</section>

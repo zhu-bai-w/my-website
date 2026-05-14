@@ -1,0 +1,10 @@
+<svg width="960" height="600" viewBox="0 0 960 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="600" fill="#FFF9ED"/>
+  <path d="M154 176H360L402 226H806V480H154V176Z" fill="#EFE3CB" stroke="#E1D3BA" stroke-width="5"/>
+  <rect x="218" y="254" width="236" height="156" rx="8" fill="#FFF9ED" stroke="#7A4DFF" stroke-width="5"/>
+  <rect x="514" y="254" width="236" height="156" rx="8" fill="#FFF9ED" stroke="#6B7D46" stroke-width="5"/>
+  <path d="M252 310H410M252 350H374M548 310H706M548 350H672" stroke="#3B2463" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="706" cy="176" r="44" fill="#FFD84D" stroke="#FF9F1C" stroke-width="5"/>
+  <path d="M162 108C128 84 84 88 58 122C102 142 138 138 162 108Z" fill="#6B7D46"/>
+  <text x="72" y="548" fill="#3B2463" font-family="Arial, sans-serif" font-size="42" font-weight="700">RESUME ARCHIVE</text>
+</svg>

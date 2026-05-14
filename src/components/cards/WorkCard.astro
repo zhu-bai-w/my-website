@@ -1,0 +1,33 @@
+---
+import Badge from '../ui/Badge.astro';
+
+interface Props {
+  href: string;
+  title: string;
+  summary: string;
+  type: string;
+  role: string;
+  tags: string[];
+  cover?: string;
+}
+
+const { href, title, summary, type, role, tags, cover = '/images/placeholders/game-project.svg' } = Astro.props;
+---
+
+<a class="card work-card" href={href}>
+  <div class="cover-frame">
+    <img src={cover} alt={`${title}封面`} loading="lazy" />
+  </div>
+  <div class="card-body">
+    <div class="card-meta">
+      <span>{type}</span>
+      <span>{role}</span>
+    </div>
+    <h3>{title}</h3>
+    <p>{summary}</p>
+    <div class="badge-list" aria-label="项目标签">
+      {tags.slice(0, 3).map((tag) => <Badge label={tag} />)}
+    </div>
+    <span class="card-action">查看详情</span>
+  </div>
+</a>

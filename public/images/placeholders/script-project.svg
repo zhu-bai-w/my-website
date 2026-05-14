@@ -1,0 +1,10 @@
+<svg width="960" height="600" viewBox="0 0 960 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="600" fill="#FFF9ED"/>
+  <rect x="174" y="80" width="430" height="440" rx="8" fill="#EFE3CB" stroke="#E1D3BA" stroke-width="4"/>
+  <path d="M238 158H540M238 216H508M238 274H546M238 332H468" stroke="#3B2463" stroke-width="10" stroke-linecap="round"/>
+  <rect x="626" y="252" width="168" height="168" rx="8" fill="#FFD84D" stroke="#FF9F1C" stroke-width="5"/>
+  <path d="M664 300H756M664 338H756M664 376H756" stroke="#3B2463" stroke-width="9" stroke-linecap="round"/>
+  <path d="M750 126C716 102 672 106 646 140C690 160 726 156 750 126Z" fill="#6B7D46"/>
+  <path d="M728 166C762 142 806 146 832 180C788 200 752 196 728 166Z" fill="#6B7D46"/>
+  <text x="72" y="548" fill="#3B2463" font-family="Arial, sans-serif" font-size="42" font-weight="700">SCRIPT LOG</text>
+</svg>

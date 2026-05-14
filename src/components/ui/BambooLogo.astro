@@ -1,0 +1,15 @@
+---
+interface Props {
+  class?: string;
+  title?: string;
+}
+
+const { class: className = 'logo-mark', title = '竹叶标志' } = Astro.props;
+---
+
+<svg class={className} viewBox="0 0 64 64" role="img" aria-label={title} fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M31.7 54.5C33 42.6 32.6 29.8 28.9 11.6" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  <path d="M29.2 22.9C17.9 18.4 9.1 20.6 4.9 27.3C13.8 32.9 23.9 31.2 29.2 22.9Z" fill="currentColor"/>
+  <path d="M32.6 31.3C42.8 22.9 52.4 21.6 59.5 27.2C53.9 36.5 42.9 38.1 32.6 31.3Z" fill="currentColor"/>
+  <path d="M32.7 42.4C22.6 39.4 14.8 42.1 11.2 48.6C19.2 52.6 27.6 50.6 32.7 42.4Z" fill="currentColor"/>
+</svg>

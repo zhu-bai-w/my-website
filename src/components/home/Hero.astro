@@ -1,0 +1,58 @@
+---
+import Button from '../ui/Button.astro';
+---
+
+<section class="hero" aria-labelledby="home-title">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow">Bamboo White Tea Studio</span>
+      <h1 id="home-title" class="hero-title">竹子白茶的小屋</h1>
+      <p class="hero-subtitle">把游戏设计、AI 工作流和创作记录整理成可复用的项目档案。</p>
+      <p class="hero-english">A field archive for stories, games, and practical tools.</p>
+      <div class="hero-tags" aria-label="创作方向">
+        <span>Game Design</span>
+        <span>AI Workflow</span>
+        <span>Project Archive</span>
+        <span>Writing</span>
+      </div>
+      <div class="button-row" aria-label="首页主要入口">
+        <Button href="/portfolio/" label="查看作品集" variant="primary" />
+        <Button href="/blog/" label="阅读博客" />
+        <Button href="/lab/" label="进入工具房" variant="quiet" />
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-label="作品档案工作台">
+      <div class="archive-board">
+        <div class="archive-board-head">
+          <span>Current Index</span>
+          <strong>Design / Tools / Notes</strong>
+        </div>
+        <div class="archive-stack">
+          <a class="archive-tile archive-tile-large" href="/portfolio/">
+            <img src="/images/placeholders/game-project.svg" alt="游戏设计作品封面" />
+            <span>Portfolio</span>
+          </a>
+          <a class="archive-tile" href="/blog/">
+            <img src="/images/placeholders/blog-note.svg" alt="创作笔记封面" />
+            <span>Notes</span>
+          </a>
+          <a class="archive-tile" href="/lab/">
+            <img src="/images/placeholders/ai-tool.svg" alt="AI 工具封面" />
+            <span>Lab</span>
+          </a>
+        </div>
+        <dl class="archive-log">
+          <div>
+            <dt>Focus</dt>
+            <dd>系统拆解与可执行流程</dd>
+          </div>
+          <div>
+            <dt>Output</dt>
+            <dd>作品、复盘、工具与简历档案</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>

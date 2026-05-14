@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import FeaturedRooms from '../components/home/FeaturedRooms.astro';
+import SelectedWorks from '../components/home/SelectedWorks.astro';
+import RecentNotes from '../components/home/RecentNotes.astro';
+import AboutPreview from '../components/home/AboutPreview.astro';
+import { sortPosts, sortWorks } from '../lib/content';
+
+const works = sortWorks(await getCollection('works'));
+const posts = sortPosts(await getCollection('blog'));
+const selectedWorks = works.filter((work) => work.data.featured).slice(0, 3);
+const recentPosts = posts.slice(0, 3);
+---
+
+<BaseLayout>
+  <Hero />
+  <FeaturedRooms />
+  <SelectedWorks works={selectedWorks} />
+  <RecentNotes posts={recentPosts} />
+  <AboutPreview />
+</BaseLayout>

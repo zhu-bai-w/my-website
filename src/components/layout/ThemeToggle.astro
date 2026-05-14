@@ -1,0 +1,56 @@
+<button class="theme-toggle" type="button" data-theme-toggle aria-label="切换网站主题">晨光</button>
+
+<script>
+  const storageKey = 'bamboo-white-tea-theme';
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function getStoredTheme() {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      return stored === 'light' || stored === 'dark' ? stored : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function setStoredTheme(theme: 'light' | 'dark') {
+    try {
+      localStorage.setItem(storageKey, theme);
+    } catch {
+      // Theme still updates for this visit when storage is unavailable.
+    }
+  }
+
+  function syncButtons(theme: 'light' | 'dark') {
+    buttons.forEach((button) => {
+      button.textContent = theme === 'dark' ? '紫夜' : '晨光';
+      button.setAttribute(
+        'aria-label',
+        theme === 'dark' ? '当前为紫夜主题，切换到晨光主题' : '当前为晨光主题，切换到紫夜主题'
+      );
+    });
+  }
+
+  function applyTheme(theme: 'light' | 'dark', persist = true) {
+    document.documentElement.dataset.theme = theme;
+    syncButtons(theme);
+    if (persist) setStoredTheme(theme);
+  }
+
+  const initialTheme = (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light') as 'light' | 'dark';
+  syncButtons(initialTheme);
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const current = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  });
+
+  media.addEventListener('change', (event) => {
+    if (!getStoredTheme()) {
+      applyTheme(event.matches ? 'dark' : 'light', false);
+    }
+  });
+</script>

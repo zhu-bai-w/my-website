@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BlogCard from '../cards/BlogCard.astro';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="section section-tight" aria-labelledby="recent-notes">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <span class="section-kicker">Recent Notes</span>
+        <h2 id="recent-notes">最新文章</h2>
+      </div>
+      <Button href="/blog/" label="进入书房" variant="quiet" />
+    </div>
+    <div class="blog-grid">
+      {posts.map((post) => (
+        <BlogCard
+          href={`/blog/note/${post.slug}/`}
+          title={post.data.title}
+          summary={post.data.summary}
+          date={post.data.date}
+          category={post.data.category}
+          tags={post.data.tags}
+          readingTime={post.data.readingTime}
+          cover={post.data.cover}
+        />
+      ))}
+    </div>
+  </div>
+</section>

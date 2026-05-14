@@ -1,0 +1,11 @@
+<svg width="960" height="600" viewBox="0 0 960 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="600" fill="#FFF9ED"/>
+  <path d="M0 80H960M0 200H960M0 320H960M0 440H960M120 0V600M240 0V600M360 0V600M480 0V600M600 0V600M720 0V600M840 0V600" stroke="#E1D3BA" stroke-width="2"/>
+  <rect x="170" y="130" width="250" height="160" rx="8" fill="#EFE3CB" stroke="#7A4DFF" stroke-width="4"/>
+  <rect x="520" y="250" width="250" height="170" rx="8" fill="#EFE3CB" stroke="#6B7D46" stroke-width="4"/>
+  <path d="M420 210C500 208 476 335 520 335" stroke="#FF9F1C" stroke-width="8" stroke-linecap="round" stroke-dasharray="16 18"/>
+  <circle cx="286" cy="210" r="36" fill="#FFD84D" stroke="#3B2463" stroke-width="5"/>
+  <path d="M616 322H694M616 360H724" stroke="#3B2463" stroke-width="8" stroke-linecap="round"/>
+  <path d="M774 132C740 108 696 112 670 146C714 166 750 162 774 132Z" fill="#6B7D46"/>
+  <text x="72" y="530" fill="#3B2463" font-family="Arial, sans-serif" font-size="42" font-weight="700">GAME DESIGN</text>
+</svg>

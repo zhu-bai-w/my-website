@@ -1,0 +1,90 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Badge from '../../../components/ui/Badge.astro';
+import Button from '../../../components/ui/Button.astro';
+import MarkdownContent from '../../../components/markdown/MarkdownContent.astro';
+import TableOfContents from '../../../components/markdown/TableOfContents.astro';
+import { sortWorks } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const works = sortWorks(await getCollection('works'));
+  return works.map((work, index) => ({
+    params: { slug: work.slug },
+    props: {
+      work,
+      previous: works[index - 1] ? { slug: works[index - 1].slug, title: works[index - 1].data.title } : null,
+      next: works[index + 1] ? { slug: works[index + 1].slug, title: works[index + 1].data.title } : null
+    }
+  }));
+}
+
+const { work, previous, next } = Astro.props;
+const { Content, headings } = await render(work);
+const title = work.data.title;
+const cover = work.data.cover ?? '/images/placeholders/game-project.svg';
+---
+
+<BaseLayout title={title} description={work.data.summary}>
+  <section class="detail-hero">
+    <div class="detail-hero-inner">
+      <div>
+        <span class="eyebrow">{work.data.type}</span>
+        <h1 class="detail-title">{title}</h1>
+        <p class="detail-summary">{work.data.summary}</p>
+        <div class="badge-list" style="margin-top: 18px;">
+          {work.data.tags.map((tag: string) => <Badge label={tag} tone="leaf" />)}
+        </div>
+      </div>
+      <figure class="detail-cover">
+        <img src={cover} alt={`${title}封面`} />
+      </figure>
+    </div>
+  </section>
+
+  <div class="detail-layout">
+    <div class="detail-main">
+      <div class="meta-panel" aria-label="项目元信息">
+        <div class="meta-item">
+          <span class="meta-label">项目类型</span>
+          <span class="meta-value">{work.data.type}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">我的角色</span>
+          <span class="meta-value">{work.data.role}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">项目时间</span>
+          <span class="meta-value">{work.data.date ?? '持续整理'}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">项目状态</span>
+          <span class="meta-value">{work.data.status}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">使用工具</span>
+          <span class="meta-value">{work.data.tools.length > 0 ? work.data.tools.join(' / ') : '整理中'}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">内容模板</span>
+          <span class="meta-value">{work.data.template}</span>
+        </div>
+      </div>
+
+      <MarkdownContent>
+        <Content />
+      </MarkdownContent>
+
+      <div class="back-row">
+        <Button href="/portfolio/" label="返回作品列表" variant="quiet" />
+      </div>
+
+      <nav class="pager-row" aria-label="作品前后导航">
+        {previous ? <Button href={`/portfolio/work/${previous.slug}/`} label={`上一篇：${previous.title}`} /> : <span></span>}
+        {next ? <Button href={`/portfolio/work/${next.slug}/`} label={`下一篇：${next.title}`} /> : <span></span>}
+      </nav>
+    </div>
+
+    <TableOfContents headings={headings} />
+  </div>
+</BaseLayout>

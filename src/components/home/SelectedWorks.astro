@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import WorkCard from '../cards/WorkCard.astro';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  works: CollectionEntry<'works'>[];
+}
+
+const { works } = Astro.props;
+---
+
+<section class="section section-tight" aria-labelledby="selected-works">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <span class="section-kicker">Selected Works</span>
+        <h2 id="selected-works">代表作品</h2>
+      </div>
+      <Button href="/portfolio/" label="全部作品" variant="quiet" />
+    </div>
+    <div class="work-grid home-grid">
+      {works.map((work) => (
+        <WorkCard
+          href={`/portfolio/work/${work.slug}/`}
+          title={work.data.title}
+          summary={work.data.summary}
+          type={work.data.type}
+          role={work.data.role}
+          tags={work.data.tags}
+          cover={work.data.cover}
+        />
+      ))}
+    </div>
+  </div>
+</section>
