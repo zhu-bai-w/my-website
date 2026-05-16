@@ -1,21 +1,30 @@
 ---
 import BambooLogo from '../ui/BambooLogo.astro';
+import { siteCopy, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'zh';
+const site = siteCopy[locale];
+const logoTitle = locale === 'zh' ? '竹叶标志' : 'Bamboo leaf logo';
 ---
 
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <a class="site-logo" href="/" aria-label="竹子白茶的小屋首页">
-        <BambooLogo />
+      <a class="site-logo" href={locale === 'zh' ? '/' : '/en/'} aria-label={site.homeLabel}>
+        <BambooLogo title={logoTitle} />
         <span class="logo-text">
-          <span class="footer-title">竹子白茶的小屋</span>
-          <span class="footer-copy">一间存放着故事的小屋。</span>
+          <span class="footer-title">{site.name}</span>
+          <span class="footer-copy">{site.description}</span>
         </span>
       </a>
     </div>
     <div>
-      <p class="footer-email">Email: zhu_bai@foxmail.com（海内）</p>
-      <p class="footer-copy">© 2026 竹子白茶的小屋</p>
+      <p class="footer-email">{locale === 'zh' ? '邮箱' : 'Email'}: zhu_bai@foxmail.com</p>
+      <p class="footer-copy">© 2026 {site.name}</p>
     </div>
   </div>
 </footer>

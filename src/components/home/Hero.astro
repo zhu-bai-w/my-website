@@ -1,57 +1,39 @@
 ---
 import Button from '../ui/Button.astro';
+import type { Locale } from '../../lib/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'zh';
+const isEn = locale === 'en';
 ---
 
 <section class="hero" aria-labelledby="home-title">
   <div class="hero-inner">
     <div class="hero-copy">
-      <span class="eyebrow">Bamboo White Tea Studio</span>
-      <h1 id="home-title" class="hero-title">竹子白茶的小屋</h1>
-      <p class="hero-subtitle">把游戏设计、AI 工作流和创作记录整理成可复用的项目档案。</p>
-      <p class="hero-english">A field archive for stories, games, and practical tools.</p>
-      <div class="hero-tags" aria-label="创作方向">
-        <span>Game Design</span>
-        <span>AI Workflow</span>
-        <span>Project Archive</span>
-        <span>Writing</span>
-      </div>
-      <div class="button-row" aria-label="首页主要入口">
-        <Button href="/portfolio/" label="查看作品集" variant="primary" />
-        <Button href="/blog/" label="阅读博客" />
-        <Button href="/lab/" label="进入工具房" variant="quiet" />
+      <span class="eyebrow">{isEn ? 'zhu_bai_ Studio' : '竹子白茶工作室'}</span>
+      <h1 id="home-title" class="hero-title">{isEn ? 'zhu_bai_ Studio' : '竹子白茶的小屋'}</h1>
+      <p class="hero-subtitle">{isEn ? 'A studio that stores stories.' : '一间存放着故事的小屋'}</p>
+      <p class="hero-english">{isEn ? 'A studio about stories, games, and tools.' : '故事、游戏、工具与创作记录。'}</p>
+      <p class="hero-tags">{isEn ? 'Game design · Tool workflows · Creative notes · Project archive' : '游戏设计 · 工具流 · 创作记录 · 项目档案'}</p>
+      <div class="button-row" aria-label={isEn ? 'Primary home links' : '首页主要入口'}>
+        <Button href={isEn ? '/en/portfolio/' : '/portfolio/'} label={isEn ? 'View Portfolio' : '查看作品集'} variant="primary" />
+        <Button href={isEn ? '/en/blog/' : '/blog/'} label={isEn ? 'Read Blog' : '阅读博客'} />
+        <Button href={isEn ? '/en/lab/' : '/lab/'} label={isEn ? 'Enter Lab' : '进入工具房'} variant="quiet" />
       </div>
     </div>
 
-    <div class="hero-visual" aria-label="作品档案工作台">
-      <div class="archive-board">
-        <div class="archive-board-head">
-          <span>Current Index</span>
-          <strong>Design / Tools / Notes</strong>
-        </div>
-        <div class="archive-stack">
-          <a class="archive-tile archive-tile-large" href="/portfolio/">
-            <img src="/images/placeholders/game-project.svg" alt="游戏设计作品封面" />
-            <span>Portfolio</span>
-          </a>
-          <a class="archive-tile" href="/blog/">
-            <img src="/images/placeholders/blog-note.svg" alt="创作笔记封面" />
-            <span>Notes</span>
-          </a>
-          <a class="archive-tile" href="/lab/">
-            <img src="/images/placeholders/ai-tool.svg" alt="AI 工具封面" />
-            <span>Lab</span>
-          </a>
-        </div>
-        <dl class="archive-log">
-          <div>
-            <dt>Focus</dt>
-            <dd>系统拆解与可执行流程</dd>
-          </div>
-          <div>
-            <dt>Output</dt>
-            <dd>作品、复盘、工具与简历档案</dd>
-          </div>
-        </dl>
+    <div class="hero-visual" aria-label={isEn ? 'Creator studio tag collage' : '创作者工作室标签拼贴'}>
+      <div class="pinboard">
+        <span class="pin-tag">{isEn ? 'Game Design' : '游戏设计'}</span>
+        <span class="pin-tag">{isEn ? 'Tool Workflow' : '工具流程'}</span>
+        <span class="pin-tag">{isEn ? 'Story Log' : '故事记录'}</span>
+        <span class="pin-tag">{isEn ? 'Project Archive' : '项目档案'}</span>
+        <span class="pin-tag">{isEn ? 'Writing Notes' : '写作笔记'}</span>
+        <span class="pin-tag">{isEn ? 'Resume' : '简历'}</span>
+        <span class="bamboo-stem" aria-hidden="true"></span>
       </div>
     </div>
   </div>

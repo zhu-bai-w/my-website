@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ToolCard from '../../components/cards/ToolCard.astro';
+import WorkCard from '../../components/cards/WorkCard.astro';
+import { sortWorks } from '../../lib/content';
+import { workCopy } from '../../lib/i18n';
+
+const works = sortWorks(await getCollection('works'));
+const labWorks = works.filter((work) => ['personal-info-assistant', 'ai-workflow'].includes(work.slug));
+const tools = [
+  ['Conversation Assistant', 'For ideation, structure, text refinement, and multi-turn collaboration.'],
+  ['Code Assistant', 'For implementation, project organization, scaffolding, and frontend collaboration.'],
+  ['Model API', 'For summaries, classification, structured extraction, and workflow nodes.'],
+  ['Automation System', 'For connecting feeds, APIs, team docs, and scheduled tasks.'],
+  ['Team Docs', 'For project documents, daily briefs, collaboration records, and knowledge archives.'],
+  ['Feeds', 'For stable long-term information input.'],
+  ['Containers and Servers', 'For deploying automation services and personal tool systems.'],
+  ['Versioning and Prompting', 'For version control, tool connection, and task expression.']
+];
+---
+
+<BaseLayout locale="en" title="Lab" description="Tool systems, automation, and workflows for creative and information work.">
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <span class="eyebrow">Lab</span>
+      <h1>Lab</h1>
+      <p class="lead">A record of how I build creative and information systems with tools, automation, and workflows.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Tool Map</span>
+          <h2>My Tool Map</h2>
+        </div>
+      </div>
+      <div class="tool-grid">
+        {tools.map(([title, description]) => <ToolCard title={title} description={description} label="Tool" />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="container">
+      <article class="card workflow-card">
+        <span class="section-kicker">Workflow</span>
+        <h2>Representative Workflow</h2>
+        <p class="lead">Feeds enter an automation workflow, model tools summarize and classify the content, then results are delivered as a daily brief.</p>
+        <div class="workflow-line" aria-label="Feed-to-brief automation workflow">
+          <span class="workflow-node">Feeds</span>
+          <span class="workflow-arrow">-></span>
+          <span class="workflow-node">Automation</span>
+          <span class="workflow-arrow">-></span>
+          <span class="workflow-node">Summary</span>
+          <span class="workflow-arrow">-></span>
+          <span class="workflow-node">Daily Brief</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Cases</span>
+          <h2>Project Case Entries</h2>
+        </div>
+      </div>
+      <div class="work-grid home-grid">
+        {labWorks.map((work) => {
+          const copy = workCopy(work, 'en');
+          return (
+            <WorkCard
+              href={`/en/portfolio/work/${work.slug}/`}
+              title={copy.title}
+              summary={copy.summary}
+              type={copy.type}
+              role={copy.role}
+              tags={copy.tags}
+              cover={work.data.cover}
+              locale="en"
+            />
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

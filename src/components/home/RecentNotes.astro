@@ -2,36 +2,43 @@
 import type { CollectionEntry } from 'astro:content';
 import BlogCard from '../cards/BlogCard.astro';
 import Button from '../ui/Button.astro';
+import { postCopy, type Locale } from '../../lib/i18n';
 
 interface Props {
   posts: CollectionEntry<'blog'>[];
+  locale?: Locale;
 }
 
-const { posts } = Astro.props;
+const { posts, locale = 'zh' } = Astro.props;
+const isEn = locale === 'en';
 ---
 
 <section class="section section-tight" aria-labelledby="recent-notes">
   <div class="container">
     <div class="section-heading">
       <div>
-        <span class="section-kicker">Recent Notes</span>
-        <h2 id="recent-notes">最新文章</h2>
+        <span class="section-kicker">{isEn ? 'Recent Notes' : '最新文章'}</span>
+        <h2 id="recent-notes">{isEn ? 'Recent Notes' : '最新文章'}</h2>
       </div>
-      <Button href="/blog/" label="进入书房" variant="quiet" />
+      <Button href={isEn ? '/en/blog/' : '/blog/'} label={isEn ? 'Enter Blog' : '进入书房'} variant="quiet" />
     </div>
     <div class="blog-grid">
-      {posts.map((post) => (
+      {posts.map((post) => {
+        const copy = postCopy(post, locale);
+        return (
         <BlogCard
-          href={`/blog/note/${post.slug}/`}
-          title={post.data.title}
-          summary={post.data.summary}
+          href={`${isEn ? '/en' : ''}/blog/note/${post.slug}/`}
+          title={copy.title}
+          summary={copy.summary}
           date={post.data.date}
-          category={post.data.category}
-          tags={post.data.tags}
-          readingTime={post.data.readingTime}
+          category={copy.category}
+          tags={copy.tags}
+          readingTime={copy.readingTime}
           cover={post.data.cover}
+          locale={locale}
         />
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>

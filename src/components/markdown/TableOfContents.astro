@@ -1,4 +1,6 @@
 ---
+import type { Locale } from '../../lib/i18n';
+
 interface Heading {
   depth: number;
   slug: string;
@@ -7,14 +9,16 @@ interface Heading {
 
 interface Props {
   headings: Heading[];
+  locale?: Locale;
 }
 
-const headings = Astro.props.headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const { headings: sourceHeadings, locale = 'zh' } = Astro.props;
+const headings = sourceHeadings.filter((heading) => heading.depth === 2 || heading.depth === 3);
 ---
 
 {headings.length > 0 && (
-  <aside class="toc" aria-label="目录">
-    <div class="toc-title">目录 Contents</div>
+  <aside class="toc" aria-label={locale === 'zh' ? '目录' : 'Contents'}>
+    <div class="toc-title">{locale === 'zh' ? '目录' : 'Contents'}</div>
     <ol class="toc-list">
       {headings.map((heading) => (
         <li>

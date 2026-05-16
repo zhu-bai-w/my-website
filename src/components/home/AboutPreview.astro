@@ -2,27 +2,38 @@
 import Badge from '../ui/Badge.astro';
 import Button from '../ui/Button.astro';
 import BambooLogo from '../ui/BambooLogo.astro';
+import type { Locale } from '../../lib/i18n';
 
-const skills = ['Game Design', 'Narrative Design', 'AI Workflow', 'Tools & Automation', 'Project Management', 'Writing'];
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'zh';
+const isEn = locale === 'en';
+const skills = isEn
+  ? ['Game Design', 'Narrative Design', 'Tool Workflows', 'Automation', 'Project Management', 'Writing']
+  : ['游戏设计', '叙事设计', '工具流程', '自动化系统', '项目管理', '写作'];
 ---
 
 <section class="section" aria-labelledby="about-preview-title">
   <div class="container about-preview">
     <div class="card profile-panel">
-      <span class="section-kicker">About Preview</span>
-      <h2 id="about-preview-title">关于竹子白茶</h2>
+      <span class="section-kicker">{isEn ? 'About Preview' : '关于预览'}</span>
+      <h2 id="about-preview-title">{isEn ? 'About zhu_bai_' : '关于竹子白茶'}</h2>
       <p class="lead">
-        我是竹子白茶，一名关注游戏设计、AI 工具流与叙事创作的创作者。我喜欢把复杂想法拆成系统、流程和可执行的项目，也在持续探索 AI 如何帮助创作、协作与个人知识管理。
+        {isEn
+          ? 'I am zhu_bai_, a creator focused on game design, tool workflows, and narrative work. I like turning complex ideas into systems, processes, and executable projects.'
+          : '我是竹子白茶，一名关注游戏设计、工具流程与叙事创作的创作者。我喜欢把复杂想法拆成系统、流程和可执行的项目，也在持续探索工具如何帮助创作、协作与个人知识管理。'}
       </p>
       <div class="badge-list">
         {skills.map((skill) => <Badge label={skill} tone="leaf" />)}
       </div>
       <div class="button-row">
-        <Button href="/about/" label="了解更多" />
+        <Button href={isEn ? '/en/about/' : '/about/'} label={isEn ? 'Learn More' : '了解更多'} />
       </div>
     </div>
-    <div class="abstract-avatar" aria-label="抽象竹叶头像区域">
-      <BambooLogo class="avatar-mark" title="抽象竹叶头像" />
+    <div class="abstract-avatar" aria-label={isEn ? 'Abstract bamboo-leaf avatar area' : '抽象竹叶头像区域'}>
+      <BambooLogo class="avatar-mark" title={isEn ? 'Abstract bamboo-leaf avatar' : '抽象竹叶头像'} />
     </div>
   </div>
 </section>

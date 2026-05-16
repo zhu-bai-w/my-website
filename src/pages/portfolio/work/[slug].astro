@@ -6,6 +6,7 @@ import Button from '../../../components/ui/Button.astro';
 import MarkdownContent from '../../../components/markdown/MarkdownContent.astro';
 import TableOfContents from '../../../components/markdown/TableOfContents.astro';
 import { sortWorks } from '../../../lib/content';
+import { getTemplateLabel } from '../../../lib/i18n';
 
 export async function getStaticPaths() {
   const works = sortWorks(await getCollection('works'));
@@ -23,6 +24,7 @@ const { work, previous, next } = Astro.props;
 const { Content, headings } = await render(work);
 const title = work.data.title;
 const cover = work.data.cover ?? '/images/placeholders/game-project.svg';
+const templateLabel = getTemplateLabel(work.data.template, 'zh');
 ---
 
 <BaseLayout title={title} description={work.data.summary}>
@@ -67,7 +69,7 @@ const cover = work.data.cover ?? '/images/placeholders/game-project.svg';
         </div>
         <div class="meta-item">
           <span class="meta-label">内容模板</span>
-          <span class="meta-value">{work.data.template}</span>
+          <span class="meta-value">{templateLabel}</span>
         </div>
       </div>
 

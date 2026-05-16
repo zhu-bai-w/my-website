@@ -1,4 +1,26 @@
-<button class="theme-toggle" type="button" data-theme-toggle aria-label="切换网站主题">晨光</button>
+---
+import { siteCopy, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'zh';
+const site = siteCopy[locale];
+---
+
+<button
+  class="theme-toggle"
+  type="button"
+  data-theme-toggle
+  data-light-label={site.themeLight}
+  data-dark-label={site.themeDark}
+  data-light-aria={site.themeLightAria}
+  data-dark-aria={site.themeDarkAria}
+  aria-label={site.themeLightAria}
+>
+  {site.themeLight}
+</button>
 
 <script>
   const storageKey = 'bamboo-white-tea-theme';
@@ -24,11 +46,8 @@
 
   function syncButtons(theme: 'light' | 'dark') {
     buttons.forEach((button) => {
-      button.textContent = theme === 'dark' ? '紫夜' : '晨光';
-      button.setAttribute(
-        'aria-label',
-        theme === 'dark' ? '当前为紫夜主题，切换到晨光主题' : '当前为晨光主题，切换到紫夜主题'
-      );
+      button.textContent = theme === 'dark' ? button.dataset.darkLabel || '' : button.dataset.lightLabel || '';
+      button.setAttribute('aria-label', theme === 'dark' ? button.dataset.darkAria || '' : button.dataset.lightAria || '');
     });
   }
 

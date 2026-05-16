@@ -14,8 +14,8 @@ export function sortPosts(posts: CollectionEntry<'blog'>[]) {
   return [...posts].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
 
-export function formatDate(date: Date) {
-  return new Intl.DateTimeFormat('zh-CN', {
+export function formatDate(date: Date, locale: 'zh' | 'en' = 'zh') {
+  return new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit'

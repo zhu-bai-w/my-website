@@ -2,35 +2,42 @@
 import type { CollectionEntry } from 'astro:content';
 import WorkCard from '../cards/WorkCard.astro';
 import Button from '../ui/Button.astro';
+import { workCopy, type Locale } from '../../lib/i18n';
 
 interface Props {
   works: CollectionEntry<'works'>[];
+  locale?: Locale;
 }
 
-const { works } = Astro.props;
+const { works, locale = 'zh' } = Astro.props;
+const isEn = locale === 'en';
 ---
 
 <section class="section section-tight" aria-labelledby="selected-works">
   <div class="container">
     <div class="section-heading">
       <div>
-        <span class="section-kicker">Selected Works</span>
-        <h2 id="selected-works">代表作品</h2>
+        <span class="section-kicker">{isEn ? 'Selected Works' : '代表作品'}</span>
+        <h2 id="selected-works">{isEn ? 'Selected Works' : '代表作品'}</h2>
       </div>
-      <Button href="/portfolio/" label="全部作品" variant="quiet" />
+      <Button href={isEn ? '/en/portfolio/' : '/portfolio/'} label={isEn ? 'All Works' : '全部作品'} variant="quiet" />
     </div>
     <div class="work-grid home-grid">
-      {works.map((work) => (
+      {works.map((work) => {
+        const copy = workCopy(work, locale);
+        return (
         <WorkCard
-          href={`/portfolio/work/${work.slug}/`}
-          title={work.data.title}
-          summary={work.data.summary}
-          type={work.data.type}
-          role={work.data.role}
-          tags={work.data.tags}
+          href={`${isEn ? '/en' : ''}/portfolio/work/${work.slug}/`}
+          title={copy.title}
+          summary={copy.summary}
+          type={copy.type}
+          role={copy.role}
+          tags={copy.tags}
           cover={work.data.cover}
+          locale={locale}
         />
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>

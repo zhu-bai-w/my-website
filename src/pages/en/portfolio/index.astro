@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import WorkCard from '../../../components/cards/WorkCard.astro';
+import { sortWorks } from '../../../lib/content';
+import { workCopy } from '../../../lib/i18n';
+
+const works = sortWorks(await getCollection('works'));
+const categories = ['All', 'Game Design', 'Tool System', 'Writing', 'Game Analysis', 'Workflow', 'Resume'];
+---
+
+<BaseLayout locale="en" title="Portfolio" description="Game design, writing, tool workflows, game analysis, and career archive.">
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <span class="eyebrow">Portfolio</span>
+      <h1>Portfolio</h1>
+      <p class="lead">A collection of game design, writing, tool workflows, game analysis, and career archive material.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="filter-bar" aria-label="Portfolio category filter">
+        {categories.map((category) => (
+          <button
+            class:list={['filter-button', category === 'All' && 'is-active']}
+            type="button"
+            data-filter-button
+            data-category={category}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <div class="work-grid portfolio-grid">
+        {works.map((work) => {
+          const copy = workCopy(work, 'en');
+          return (
+            <div data-filter-card data-category={copy.type}>
+              <WorkCard
+                href={`/en/portfolio/work/${work.slug}/`}
+                title={copy.title}
+                summary={copy.summary}
+                type={copy.type}
+                role={copy.role}
+                tags={copy.tags}
+                cover={work.data.cover}
+                locale="en"
+              />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter-button]'));
+  const filterCards = Array.from(document.querySelectorAll<HTMLElement>('[data-filter-card]'));
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const category = button.dataset.category || 'All';
+      filterButtons.forEach((item) => item.classList.toggle('is-active', item === button));
+      filterCards.forEach((card) => {
+        card.hidden = category !== 'All' && card.dataset.category !== category;
+      });
+    });
+  });
+</script>

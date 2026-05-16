@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Badge from '../../components/ui/Badge.astro';
+
+const skills = ['Game Design', 'Narrative Design', 'Tool Workflows', 'Prompting', 'Project Management', 'Writing'];
+---
+
+<BaseLayout locale="en" title="Resume" description="Education, project experience, skills, and career archive.">
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <span class="eyebrow">Resume</span>
+      <h1>Resume</h1>
+      <p class="lead">A web resume archive for project experience, skill structure, and direction.</p>
+      <button class="btn btn-disabled disabled-download" type="button" disabled>
+        <span>Download Resume</span>
+        <small>Coming soon</small>
+      </button>
+      <p class="lead">The downloadable resume is still being organized. The web version is available first.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container resume-grid">
+      <article class="card info-panel">
+        <h2>Education</h2>
+        <p>I continue to build knowledge around game design, content creation, project management, and model-assisted workflows. Formal school and course information can be added later.</p>
+      </article>
+      <article class="card info-panel">
+        <h2>Project Experience</h2>
+        <ul>
+          <li>The Hakoniwa That Belongs to You: narrative simulation game prototype, lead planning and system breakdown.</li>
+          <li>Golden Abacus: anti-fraud short-form drama project, script and content organization.</li>
+          <li>Personal Information Assistant: automation workflow connecting feeds, model summaries, and team-doc delivery.</li>
+        </ul>
+      </article>
+      <article class="card info-panel">
+        <h2>Skills</h2>
+        <div class="badge-list">
+          {skills.map((skill) => <Badge label={skill} tone="leaf" />)}
+        </div>
+      </article>
+      <article class="card info-panel">
+        <h2>Game Experience</h2>
+        <p>I focus on mechanics, system loops, player experience, and narrative expression, and turn play observations into design references and method notes.</p>
+      </article>
+      <article class="card info-panel">
+        <h2>Tool Capability</h2>
+        <p>I build information processing and creative support workflows with conversation assistants, code assistants, model APIs, automation systems, team docs, container services, connector protocols, and prompting.</p>
+      </article>
+      <article class="card info-panel">
+        <h2>Content Creation</h2>
+        <p>I can organize themes, characters, conflict, structure, and expression goals into collaborative documents, scripts, reviews, and project archives.</p>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

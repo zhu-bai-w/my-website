@@ -1,6 +1,7 @@
 ---
 import Badge from '../ui/Badge.astro';
 import { formatDate } from '../../lib/content';
+import type { Locale } from '../../lib/i18n';
 
 interface Props {
   href: string;
@@ -11,26 +12,27 @@ interface Props {
   tags: string[];
   readingTime: string;
   cover?: string;
+  locale?: Locale;
 }
 
-const { href, title, summary, date, category, tags, readingTime, cover = '/images/placeholders/blog-note.svg' } = Astro.props;
+const { href, title, summary, date, category, tags, readingTime, cover = '/images/placeholders/blog-note.svg', locale = 'zh' } = Astro.props;
 ---
 
 <a class="card blog-card" href={href}>
   <div class="cover-frame">
-    <img src={cover} alt={`${title}封面`} loading="lazy" />
+    <img src={cover} alt={locale === 'zh' ? `${title}封面` : `${title} cover`} loading="lazy" />
   </div>
   <div class="card-body">
     <div class="card-meta">
-      <time datetime={date.toISOString()}>{formatDate(date)}</time>
+      <time datetime={date.toISOString()}>{formatDate(date, locale)}</time>
       <span>{category}</span>
       <span>{readingTime}</span>
     </div>
     <h3>{title}</h3>
     <p>{summary}</p>
-    <div class="badge-list" aria-label="文章标签">
+    <div class="badge-list" aria-label={locale === 'zh' ? '文章标签' : 'Article tags'}>
       {tags.slice(0, 3).map((tag) => <Badge label={tag} />)}
     </div>
-    <span class="card-action">阅读全文</span>
+    <span class="card-action">{locale === 'zh' ? '阅读全文' : 'Read More'}</span>
   </div>
 </a>

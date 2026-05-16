@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Badge from '../../components/ui/Badge.astro';
+import BambooLogo from '../../components/ui/BambooLogo.astro';
+
+const skills = ['Game Design', 'Narrative Design', 'Tool Workflows', 'Automation', 'Project Management', 'Writing'];
+const nowItems = [
+  'Organizing portfolio and resume material',
+  'Archiving an indie game prototype and project notes',
+  'Building a personal information assistant workflow',
+  'Documenting game design, tool systems, and creative methods'
+];
+---
+
+<BaseLayout locale="en" title="About" description="About zhu_bai_ Studio and recent work.">
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <span class="eyebrow">About</span>
+      <h1>About</h1>
+      <p class="lead">I am zhu_bai_, focused on game design, tool workflows, and narrative creation.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container about-preview">
+      <article class="card profile-panel">
+        <h2>Profile</h2>
+        <p>
+          I use this website as a long-term home for projects, notes, and tool experiments. It will gradually collect game design documents, writing projects, automation workflows, project reviews, and career archives.
+        </p>
+        <p>
+          I care about expression and structure: how an idea becomes tasks, how a project turns into reusable experience, and how a toolchain becomes a stable creative workflow.
+        </p>
+        <div class="badge-list">
+          {skills.map((skill) => <Badge label={skill} tone="leaf" />)}
+        </div>
+      </article>
+      <div class="abstract-avatar" aria-label="Avatar placeholder">
+        <BambooLogo class="avatar-mark" title="zhu_bai_ abstract avatar" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="container resume-grid">
+      <article class="card info-panel">
+        <h2>Now</h2>
+        <ul>
+          {nowItems.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+      <article class="card info-panel">
+        <h2>Contact</h2>
+        <p>Email: zhu_bai@foxmail.com</p>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

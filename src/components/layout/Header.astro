@@ -1,41 +1,51 @@
 ---
 import BambooLogo from '../ui/BambooLogo.astro';
 import ThemeToggle from './ThemeToggle.astro';
+import { isActivePath, localizedPath, navItems, siteCopy, type Locale } from '../../lib/i18n';
 
-const navItems = [
-  { href: '/', label: '首页 Home', match: (path: string) => path === '/' },
-  { href: '/portfolio/', label: '作品间 Portfolio', match: (path: string) => path.startsWith('/portfolio') },
-  { href: '/blog/', label: '书房 Blog', match: (path: string) => path.startsWith('/blog') },
-  { href: '/lab/', label: '工具房 Lab', match: (path: string) => path.startsWith('/lab') },
-  { href: '/resume/', label: '档案柜 Resume', match: (path: string) => path.startsWith('/resume') },
-  { href: '/about/', label: '关于 About', match: (path: string) => path.startsWith('/about') }
-];
+interface Props {
+  locale?: Locale;
+}
 
+const locale = Astro.props.locale ?? 'zh';
+const site = siteCopy[locale];
+const items = navItems[locale];
 const currentPath = Astro.url.pathname;
+const switchLocale = locale === 'zh' ? 'en' : 'zh';
+const switchHref = localizedPath(currentPath, switchLocale);
+const logoTitle = locale === 'zh' ? '竹叶标志' : 'Bamboo leaf logo';
 ---
 
 <header class="site-header">
   <div class="header-inner">
-    <a class="site-logo" href="/" aria-label="竹子白茶的小屋首页">
-      <BambooLogo />
+    <a class="site-logo" href={locale === 'zh' ? '/' : '/en/'} aria-label={site.homeLabel}>
+      <BambooLogo title={logoTitle} />
       <span class="logo-text">
-        <span class="logo-title">竹子白茶的小屋</span>
-        <span class="logo-subtitle">Bamboo White Tea Studio</span>
+        <span class="logo-title">{site.name}</span>
+        <span class="logo-subtitle">{site.subtitle}</span>
       </span>
     </a>
 
-    <nav class="site-nav" data-mobile-menu aria-label="主导航">
-      {navItems.map((item) => (
-        <a class:list={['nav-link', item.match(currentPath) && 'is-active']} href={item.href}>{item.label}</a>
+    <nav class="site-nav" data-mobile-menu aria-label={locale === 'zh' ? '主导航' : 'Main navigation'}>
+      {items.map((item) => (
+        <a class:list={['nav-link', isActivePath(currentPath, item.path) && 'is-active']} href={item.path}>{item.label}</a>
       ))}
     </nav>
 
     <div class="header-actions">
-      <button class="lang-switch" type="button" aria-label="语言切换预留">
-        <span>CN</span><span>/</span><span>EN</span>
-      </button>
-      <ThemeToggle />
-      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-label="打开导航菜单">
+      <a class="lang-switch" href={switchHref} aria-label={locale === 'zh' ? '切换到英文版' : 'Switch to Chinese version'}>
+        <span>{site.langSwitch}</span>
+      </a>
+      <ThemeToggle locale={locale} />
+      <button
+        class="menu-toggle"
+        type="button"
+        data-menu-toggle
+        data-open-label={site.menuOpen}
+        data-close-label={site.menuClose}
+        aria-expanded="false"
+        aria-label={site.menuOpen}
+      >
         <span class="menu-toggle-bars" aria-hidden="true"></span>
       </button>
     </div>
@@ -48,14 +58,17 @@ const currentPath = Astro.url.pathname;
 
   function closeMenu() {
     menuButton?.setAttribute('aria-expanded', 'false');
-    menuButton?.setAttribute('aria-label', '打开导航菜单');
+    menuButton?.setAttribute('aria-label', menuButton?.dataset.openLabel || '');
     mobileMenu?.classList.remove('is-open');
   }
 
   menuButton?.addEventListener('click', () => {
     const nextExpanded = menuButton.getAttribute('aria-expanded') !== 'true';
     menuButton.setAttribute('aria-expanded', String(nextExpanded));
-    menuButton.setAttribute('aria-label', nextExpanded ? '关闭导航菜单' : '打开导航菜单');
+    menuButton.setAttribute(
+      'aria-label',
+      nextExpanded ? menuButton.dataset.closeLabel || '' : menuButton.dataset.openLabel || ''
+    );
     mobileMenu?.classList.toggle('is-open', nextExpanded);
   });
 

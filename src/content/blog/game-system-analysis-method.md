@@ -9,7 +9,7 @@ tags:
   - 系统分析
   - 机制拆解
   - 玩家体验
-readingTime: 6 min
+readingTime: 6 分钟
 cover: /images/placeholders/blog-note.svg
 featured: true
 ---

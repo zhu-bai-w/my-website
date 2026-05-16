@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Badge from '../../../../components/ui/Badge.astro';
+import Button from '../../../../components/ui/Button.astro';
+import MarkdownContent from '../../../../components/markdown/MarkdownContent.astro';
+import TableOfContents from '../../../../components/markdown/TableOfContents.astro';
+import { formatDate, sortPosts } from '../../../../lib/content';
+import { postCopy } from '../../../../lib/i18n';
+
+export async function getStaticPaths() {
+  const posts = sortPosts(await getCollection('blog'));
+  return posts.map((post, index) => ({
+    params: { slug: post.slug },
+    props: {
+      post,
+      previous: posts[index - 1] ? { slug: posts[index - 1].slug, title: postCopy(posts[index - 1], 'en').title } : null,
+      next: posts[index + 1] ? { slug: posts[index + 1].slug, title: postCopy(posts[index + 1], 'en').title } : null
+    }
+  }));
+}
+
+const { post, previous, next } = Astro.props;
+const copy = postCopy(post, 'en');
+const cover = post.data.cover ?? '/images/placeholders/blog-note.svg';
+const headings = [{ depth: 2, slug: 'overview', text: 'Overview' }];
+---
+
+<BaseLayout locale="en" title={copy.title} description={copy.summary}>
+  <section class="detail-hero">
+    <div class="detail-hero-inner">
+      <div>
+        <span class="eyebrow">{copy.category}</span>
+        <h1 class="detail-title">{copy.title}</h1>
+        <p class="detail-summary">{copy.summary}</p>
+        <div class="card-meta" style="margin-top: 18px;">
+          <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date, 'en')}</time>
+          <span>{copy.readingTime}</span>
+        </div>
+        <div class="badge-list" style="margin-top: 14px;">
+          {copy.tags.map((tag: string) => <Badge label={tag} tone="leaf" />)}
+        </div>
+      </div>
+      <figure class="detail-cover">
+        <img src={cover} alt={`${copy.title} cover`} />
+      </figure>
+    </div>
+  </section>
+
+  <div class="detail-layout">
+    <div class="detail-main">
+      <div class="meta-panel" aria-label="Article metadata">
+        <div class="meta-item">
+          <span class="meta-label">Published</span>
+          <span class="meta-value">{formatDate(post.data.date, 'en')}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Category</span>
+          <span class="meta-value">{copy.category}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Reading Time</span>
+          <span class="meta-value">{copy.readingTime}</span>
+        </div>
+      </div>
+
+      <MarkdownContent>
+        <h2 id="overview">Overview</h2>
+        {copy.body.map((paragraph: string) => <p>{paragraph}</p>)}
+      </MarkdownContent>
+
+      <div class="back-row">
+        <Button href="/en/blog/" label="Back to Blog" variant="quiet" />
+      </div>
+
+      <nav class="pager-row" aria-label="Article navigation">
+        {previous ? <Button href={`/en/blog/note/${previous.slug}/`} label={`Previous: ${previous.title}`} /> : <span></span>}
+        {next ? <Button href={`/en/blog/note/${next.slug}/`} label={`Next: ${next.title}`} /> : <span></span>}
+      </nav>
+    </div>
+
+    <TableOfContents headings={headings} locale="en" />
+  </div>
+</BaseLayout>

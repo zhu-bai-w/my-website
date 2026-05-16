@@ -4,14 +4,15 @@ interface Props {
   title: string;
   description: string;
   icon: string;
+  actionLabel?: string;
 }
 
-const { href, title, description, icon } = Astro.props;
+const { href, title, description, icon, actionLabel = '进入房间' } = Astro.props;
 ---
 
 <a class="card room-card" href={href}>
   <span class="room-card-icon" aria-hidden="true">{icon}</span>
   <h3>{title}</h3>
   <p>{description}</p>
-  <span class="card-action">进入房间</span>
+  <span class="card-action">{actionLabel}</span>
 </a>
