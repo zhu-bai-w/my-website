@@ -107,7 +107,8 @@ tags:
   - 标签一
   - 标签二
 readingTime: 6 分钟
-cover: /images/blog/game-system-analysis-method-cover.jpg
+cover: /images/blog/game-system-analysis-method-cover-light.png
+coverDark: /images/blog/game-system-analysis-method-cover-dark.png
 featured: true
 ---
 
@@ -132,7 +133,9 @@ featured: true
 
 `readingTime`：阅读时间。中文端建议写成 `6 分钟`、`8 分钟`。
 
-`cover`：封面图片路径。图片放在 `public/images/` 下，填写 `/images/...` 路径。
+`cover`：浅色主题封面图片路径。图片放在 `public/images/` 下，填写 `/images/...` 路径。
+
+`coverDark`：深色主题封面图片路径。建议与 `cover` 使用同一构图、同一标题和同一信息层级，只调整背景、文字和装饰色。浅色主题搭配浅色封面，深色主题搭配深色封面。
 
 `featured`：是否进入首页近期文章区。`true` 表示展示。
 
@@ -180,6 +183,7 @@ game-analysis-note-01.jpg
 - 尺寸：建议宽度不低于 `1200px`。
 - 格式：照片用 `.jpg`，界面图和信息图用 `.png`，矢量占位图可用 `.svg`。
 - 路径：文件放到 `public/images/works/hakoniwa-cover.jpg` 后，字段写 `/images/works/hakoniwa-cover.jpg`。
+- 博客封面：每篇文章优先准备浅色、深色两张同构图封面。浅色封面写入 `cover`，深色封面写入 `coverDark`。
 
 正文中插图写法：
 
@@ -189,7 +193,7 @@ game-analysis-note-01.jpg
 
 ## 五、英文页面怎么填
 
-英文页面目前不直接读取 Markdown 正文，而是读取 `src/lib/i18n.ts` 里的翻译副本。
+英文页面中，作品仍读取 `src/lib/i18n.ts` 里的翻译副本；博客文章直接复用中文 Markdown 正文和 frontmatter，不再单独维护英文博客正文或摘要。
 
 新增作品后，需要在 `workEn` 中增加同名 `slug`：
 
@@ -209,21 +213,7 @@ game-analysis-note-01.jpg
 }
 ```
 
-新增文章后，需要在 `postEn` 中增加同名 `slug`：
-
-```ts
-'game-system-analysis-method': {
-  title: 'English Title',
-  summary: 'English summary.',
-  category: 'Game Design',
-  tags: ['Game design', 'System analysis'],
-  readingTime: '6 min',
-  body: [
-    'First English paragraph.',
-    'Second English paragraph.'
-  ]
-}
-```
+新增文章后，只需要维护 `src/content/blog/*.md`。中文博客和英文博客路径都会渲染同一份文章内容。
 
 ## 六、导入后的检查步骤
 
@@ -231,8 +221,8 @@ game-analysis-note-01.jpg
 
 1. 文件名和 `slug` 是否一致。
 2. `cover` 路径是否从 `/images/` 开始。
-3. 图片文件是否真的放在 `public/images/` 下。
-4. 中文字段是否没有混入英文展示词。
-5. 英文翻译是否已经补到 `src/lib/i18n.ts`。
+3. 博客是否同时准备了 `cover` 和 `coverDark`，并确认浅色主题显示浅色封面、深色主题显示深色封面。
+4. 图片文件是否真的放在 `public/images/` 下。
+5. 中文字段是否没有混入英文展示词。
 6. 运行 `npm run build`，确认没有字段缺失或路径错误。
 7. 打开中文和英文预览页检查排版。

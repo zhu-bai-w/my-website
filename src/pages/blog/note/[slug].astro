@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Badge from '../../../components/ui/Badge.astro';
 import Button from '../../../components/ui/Button.astro';
+import ThemeCover from '../../../components/ui/ThemeCover.astro';
 import MarkdownContent from '../../../components/markdown/MarkdownContent.astro';
 import TableOfContents from '../../../components/markdown/TableOfContents.astro';
 import { formatDate, sortPosts } from '../../../lib/content';
@@ -22,6 +23,7 @@ export async function getStaticPaths() {
 const { post, previous, next } = Astro.props;
 const { Content, headings } = await render(post);
 const cover = post.data.cover ?? '/images/placeholders/blog-note.svg';
+const coverDark = post.data.coverDark;
 ---
 
 <BaseLayout title={post.data.title} description={post.data.summary}>
@@ -40,7 +42,7 @@ const cover = post.data.cover ?? '/images/placeholders/blog-note.svg';
         </div>
       </div>
       <figure class="detail-cover">
-        <img src={cover} alt={`${post.data.title}封面`} />
+        <ThemeCover src={cover} darkSrc={coverDark} alt={`${post.data.title}封面`} loading="eager" />
       </figure>
     </div>
   </section>

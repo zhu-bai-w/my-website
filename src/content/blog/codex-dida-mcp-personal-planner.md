@@ -11,7 +11,8 @@ tags:
   - 计划管理
   - 自动化
 readingTime: 10 分钟
-cover: /images/blog/codex-dida-mcp-personal-planner/figure-1.png
+cover: /images/blog/codex-dida-mcp-personal-planner/cover-light.png
+coverDark: /images/blog/codex-dida-mcp-personal-planner/cover-dark.png
 featured: true
 ---
 

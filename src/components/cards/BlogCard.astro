@@ -1,5 +1,6 @@
 ---
 import Badge from '../ui/Badge.astro';
+import ThemeCover from '../ui/ThemeCover.astro';
 import { formatDate } from '../../lib/content';
 import type { Locale } from '../../lib/i18n';
 
@@ -12,15 +13,27 @@ interface Props {
   tags: string[];
   readingTime: string;
   cover?: string;
+  coverDark?: string;
   locale?: Locale;
 }
 
-const { href, title, summary, date, category, tags, readingTime, cover = '/images/placeholders/blog-note.svg', locale = 'zh' } = Astro.props;
+const {
+  href,
+  title,
+  summary,
+  date,
+  category,
+  tags,
+  readingTime,
+  cover = '/images/placeholders/blog-note.svg',
+  coverDark,
+  locale = 'zh'
+} = Astro.props;
 ---
 
 <a class="card blog-card" href={href}>
   <div class="cover-frame">
-    <img src={cover} alt={locale === 'zh' ? `${title}封面` : `${title} cover`} loading="lazy" />
+    <ThemeCover src={cover} darkSrc={coverDark} alt={locale === 'zh' ? `${title}封面` : `${title} cover`} />
   </div>
   <div class="card-body">
     <div class="card-meta">

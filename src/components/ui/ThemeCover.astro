@@ -1,0 +1,15 @@
+---
+interface Props {
+  src: string;
+  darkSrc?: string;
+  alt: string;
+  loading?: 'eager' | 'lazy';
+}
+
+const { src, darkSrc, alt, loading = 'lazy' } = Astro.props;
+---
+
+<span class:list={['theme-cover', darkSrc && 'has-dark-cover']}>
+  <img class="theme-cover-light" src={src} alt={alt} loading={loading} />
+  {darkSrc && <img class="theme-cover-dark" src={darkSrc} alt="" loading={loading} aria-hidden="true" />}
+</span>
