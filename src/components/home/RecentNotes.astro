@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import BlogCard from '../cards/BlogCard.astro';
 import Button from '../ui/Button.astro';
-import { postCopy, type Locale } from '../../lib/i18n';
+import type { Locale } from '../../lib/i18n';
 
 interface Props {
   posts: CollectionEntry<'blog'>[];
@@ -24,16 +24,15 @@ const isEn = locale === 'en';
     </div>
     <div class="blog-grid">
       {posts.map((post) => {
-        const copy = postCopy(post, locale);
         return (
         <BlogCard
           href={`${isEn ? '/en' : ''}/blog/note/${post.slug}/`}
-          title={copy.title}
-          summary={copy.summary}
+          title={post.data.title}
+          summary={post.data.summary}
           date={post.data.date}
-          category={copy.category}
-          tags={copy.tags}
-          readingTime={copy.readingTime}
+          category={post.data.category}
+          tags={post.data.tags}
+          readingTime={post.data.readingTime}
           cover={post.data.cover}
           locale={locale}
         />

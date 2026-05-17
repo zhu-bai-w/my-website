@@ -1,12 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import Badge from '../../../../components/ui/Badge.astro';
 import Button from '../../../../components/ui/Button.astro';
 import MarkdownContent from '../../../../components/markdown/MarkdownContent.astro';
 import TableOfContents from '../../../../components/markdown/TableOfContents.astro';
 import { formatDate, sortPosts } from '../../../../lib/content';
-import { postCopy } from '../../../../lib/i18n';
 
 export async function getStaticPaths() {
   const posts = sortPosts(await getCollection('blog'));
@@ -14,35 +13,34 @@ export async function getStaticPaths() {
     params: { slug: post.slug },
     props: {
       post,
-      previous: posts[index - 1] ? { slug: posts[index - 1].slug, title: postCopy(posts[index - 1], 'en').title } : null,
-      next: posts[index + 1] ? { slug: posts[index + 1].slug, title: postCopy(posts[index + 1], 'en').title } : null
+      previous: posts[index - 1] ? { slug: posts[index - 1].slug, title: posts[index - 1].data.title } : null,
+      next: posts[index + 1] ? { slug: posts[index + 1].slug, title: posts[index + 1].data.title } : null
     }
   }));
 }
 
 const { post, previous, next } = Astro.props;
-const copy = postCopy(post, 'en');
+const { Content, headings } = await render(post);
 const cover = post.data.cover ?? '/images/placeholders/blog-note.svg';
-const headings = [{ depth: 2, slug: 'overview', text: 'Overview' }];
 ---
 
-<BaseLayout locale="en" title={copy.title} description={copy.summary}>
+<BaseLayout locale="en" title={post.data.title} description={post.data.summary}>
   <section class="detail-hero">
     <div class="detail-hero-inner">
       <div>
-        <span class="eyebrow">{copy.category}</span>
-        <h1 class="detail-title">{copy.title}</h1>
-        <p class="detail-summary">{copy.summary}</p>
+        <span class="eyebrow">{post.data.category}</span>
+        <h1 class="detail-title">{post.data.title}</h1>
+        <p class="detail-summary">{post.data.summary}</p>
         <div class="card-meta" style="margin-top: 18px;">
           <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date, 'en')}</time>
-          <span>{copy.readingTime}</span>
+          <span>{post.data.readingTime}</span>
         </div>
         <div class="badge-list" style="margin-top: 14px;">
-          {copy.tags.map((tag: string) => <Badge label={tag} tone="leaf" />)}
+          {post.data.tags.map((tag: string) => <Badge label={tag} tone="leaf" />)}
         </div>
       </div>
       <figure class="detail-cover">
-        <img src={cover} alt={`${copy.title} cover`} />
+        <img src={cover} alt={`${post.data.title} cover`} />
       </figure>
     </div>
   </section>
@@ -56,17 +54,16 @@ const headings = [{ depth: 2, slug: 'overview', text: 'Overview' }];
         </div>
         <div class="meta-item">
           <span class="meta-label">Category</span>
-          <span class="meta-value">{copy.category}</span>
+          <span class="meta-value">{post.data.category}</span>
         </div>
         <div class="meta-item">
           <span class="meta-label">Reading Time</span>
-          <span class="meta-value">{copy.readingTime}</span>
+          <span class="meta-value">{post.data.readingTime}</span>
         </div>
       </div>
 
       <MarkdownContent>
-        <h2 id="overview">Overview</h2>
-        {copy.body.map((paragraph: string) => <p>{paragraph}</p>)}
+        <Content />
       </MarkdownContent>
 
       <div class="back-row">

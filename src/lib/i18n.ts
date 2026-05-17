@@ -203,19 +203,6 @@ const postEn: Record<string, Partial<PostEntry['data']> & { body: string[] }> = 
       'This note describes a reusable method for analyzing games from the level of mechanics to the level of player experience.',
       'The aim is to make design observations easier to compare, reuse, and turn into practical design references.'
     ]
-  },
-  'codex-dida-mcp-personal-planner': {
-    title: 'Building a Personal Planning Assistant with Codex and Dida MCP',
-    summary: 'How I connected Codex planning, Dida task management, and MCP writes into a lightweight personal planning workflow.',
-    category: 'Workflow',
-    tags: ['Codex', 'Dida', 'MCP', 'Planning', 'Automation'],
-    readingTime: '10 min',
-    body: [
-      'This note documents a personal workflow experiment: Codex handles goal parsing, task breakdown, prioritization, and review prompts, while Dida stores the actual tasks and calendar items.',
-      'The key idea is not full automation. The assistant first turns messy natural-language input into candidate tasks, then asks for confirmation before writing them into the task system through MCP.',
-      'The workflow is organized into four modes: Inbox Capture for messy input, Daily Planner for focused daily priorities, Weekly Planner for workload management, and Review Retro for structured retrospectives.',
-      'The most useful lesson is that a planning assistant should reduce organization cost without replacing human judgment. AI suggests and structures; the existing planning app remains the execution surface.'
-    ]
   }
 };
 
