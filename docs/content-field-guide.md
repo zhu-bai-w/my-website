@@ -179,11 +179,12 @@ game-analysis-note-01.jpg
 
 封面建议：
 
-- 比例：`16:9` 或接近横图。
-- 尺寸：建议宽度不低于 `1200px`。
+- 标准比例：`16:9`。网站卡片和详情页封面容器都按这个比例渲染。
+- 推荐尺寸：`1672 x 941px`，或任意严格 `16:9` 的更高分辨率图片。
 - 格式：照片用 `.jpg`，界面图和信息图用 `.png`，矢量占位图可用 `.svg`。
 - 路径：文件放到 `public/images/works/hakoniwa-cover.jpg` 后，字段写 `/images/works/hakoniwa-cover.jpg`。
 - 博客封面：每篇文章优先准备浅色、深色两张同构图封面。浅色封面写入 `cover`，深色封面写入 `coverDark`。
+- 命名格式：放入对应文章目录，使用 `cover-light.png` 和 `cover-dark.png`。其他正文素材按用途命名，例如 `figure-1.png`、`workflow-overview.png`。
 
 正文中插图写法：
 
