@@ -1069,6 +1069,32 @@ p {
   color: var(--muted);
 }
 
+.markdown-body figure {
+  margin: 1.8rem 0;
+}
+
+.markdown-body img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-soft);
+}
+
+.markdown-body figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.article-figure-narrow {
+  max-width: 680px;
+  margin-inline: auto;
+}
+
 .markdown-body pre {
   overflow-x: auto;
   padding: 16px;
