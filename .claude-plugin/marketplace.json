@@ -1,0 +1,21 @@
+{
+  "name": "my-website-skills",
+  "owner": {
+    "name": "local"
+  },
+  "metadata": {
+    "description": "Project-local website building skill configuration for my website.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "web-design-skills",
+      "description": "Skills for high-quality visual and front-end website design work.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/web-design-engineer"
+      ]
+    }
+  ]
+}
